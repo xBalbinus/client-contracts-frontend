@@ -38,11 +38,7 @@ const { ethers } = require("ethers");
 
     Code:
     https://github.com/filecoin-project/fevm-starter-kit
-
-    Support:
-    https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA
-    or DM @austingriffith on twitter or telegram
-
+    
     You should get your own Alchemy.com & Infura.io ID and put it in `constants.js`
     (this is your connection to the main Ethereum network for ENS etc.)
 
