@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
 
-function CarFileInput() {
-  const [carLink, setCarLink] = useState('');
+function CommPInput() {
+  const [commP, setCommP] = useState('');
 
   const handleChange = (event) => {
-    setCarLink(event.target.value);
+    setCommP(event.target.value);
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     // do something with the carLink value, like send it to a backend API
-    console.log(carLink);
+    console.log(commP);
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        Link to CAR file:
-        <input type="text" value={carLink} onChange={handleChange} />
+        commP:
+        <input type="text" value={commP} onChange={handleChange} />
       </label>
       <button type="submit">Submit</button>
     </form>
+    
   );
 }
 
-export default CarFileInput;
+export default CommPInput;
