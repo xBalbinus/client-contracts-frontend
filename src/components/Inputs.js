@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import contract from '../contracts/DealClient.json';
 import { ethers } from 'ethers';
+const CID = require('cids')
 
 const contractAddress = "0xab76119E5B3863c5d297693384777d5231E0Aeb2";
 const contractABI = contract.abi;
@@ -39,12 +40,13 @@ function Inputs() {
     console.log(commP);
     console.log(carLink);
     console.log(pieceSize);
+    const cid = new CID(commP);
 
     try {
       const { ethereum } = window;
       if (ethereum) {
         const provider = new ethers.BrowserProvider(ethereum);
-        const signer = provider.getSigner();
+        const signer = await provider.getSigner();
         const dealClient = new ethers.Contract(contractAddress, contractABI, signer);
         const extraParamsV1 = [
           carLink,
@@ -53,7 +55,7 @@ function Inputs() {
           false // taskArgs.removeUnsealedCopy
         ]
         const DealRequestStruct = [
-          commP, //cidHex
+          cid.bytes, //cidHex
           pieceSize, //taskArgs.pieceSize,
           false, //taskArgs.verifiedDeal,
           "bafk2bzacec3jst4tkh424chatp273o6rxvipfg54kphd56gaxobpcdtr2sgco", //taskArgs.label,
