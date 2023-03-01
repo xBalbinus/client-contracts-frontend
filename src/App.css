@@ -17,6 +17,13 @@ button {
   transition: opacity 0.3s ease;
 }
 
+.center {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+}
+
 .button-disconnect {
   background-color: #ffc9c9;
 }
