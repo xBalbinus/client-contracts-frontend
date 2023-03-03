@@ -47,20 +47,6 @@ function Inputs() {
 
     const cid = new CID(commP);
 
-    /*
-    try {
-      fetch('carLink', {
-        method: 'HEAD'
-      }).then(response => {
-        console.log(response.headers);
-        pieceSize = response.headers.ContentLength;
-      });
-    }
-    catch {
-      console.log("Error");
-    }
-    */
-
     try {
       const { ethereum } = window;
       if (ethereum) {
