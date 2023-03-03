@@ -10,8 +10,10 @@ function Inputs() {
   const [commP, setCommP] = useState('');
   const [carLink, setCarLink] = useState('');
   const [pieceSize, setPieceSize] = useState('');
+  /*
   const [startEpoch, setStartEpoch] = useState('');
   const [endEpoch, setEndEpoch] = useState('');
+  */
 
   const handleChangeCommP = (event) => {
     setCommP(event.target.value);
@@ -25,6 +27,7 @@ function Inputs() {
     setPieceSize(event.target.value);
   }
 
+  /*
   const handleChangeStartEpoch = (event) => {
     setStartEpoch(event.target.value);
   }
@@ -32,6 +35,7 @@ function Inputs() {
   const handleChangeEndEpoch = (event) => {
     setEndEpoch(event.target.value);
   }
+  */
 
   const handleSubmit = async (event) => {
     // This will be handling deal proposal submission sometime in the future.
@@ -40,7 +44,22 @@ function Inputs() {
     console.log(commP);
     console.log(carLink);
     console.log(pieceSize);
+
     const cid = new CID(commP);
+
+    /*
+    try {
+      fetch('carLink', {
+        method: 'HEAD'
+      }).then(response => {
+        console.log(response.headers);
+        pieceSize = response.headers.ContentLength;
+      });
+    }
+    catch {
+      console.log("Error");
+    }
+    */
 
     try {
       const { ethereum } = window;
@@ -59,8 +78,8 @@ function Inputs() {
           pieceSize, //taskArgs.pieceSize,
           false, //taskArgs.verifiedDeal,
           "bafk2bzacec3jst4tkh424chatp273o6rxvipfg54kphd56gaxobpcdtr2sgco", //taskArgs.label,
-          startEpoch,
-          endEpoch,
+          520000, // startEpoch
+          1555200, // endEpoch
           0, // taskArgs.storagePricePerEpoch,
           0, // taskArgs.providerCollateral,
           0, // taskArgs.clientCollateral, 
@@ -147,6 +166,7 @@ function Inputs() {
         Piece Size:
         <input type="text" value={pieceSize} onChange={handleChangePieceSize} />
       </div>
+      {/*
       <div style = {{ display: 'block' , width: '50%', margin: 'auto' }}>
         Start Epoch:
         <input type="text" value={startEpoch} onChange={handleChangeStartEpoch} />
@@ -155,6 +175,7 @@ function Inputs() {
         End Epoch:
         <input type="text" value={endEpoch} onChange={handleChangeEndEpoch} />
       </div>
+    */}
       <button type="submit" style={{ display: 'block' , width: '50%', margin: 'auto' }}>Submit</button>
     </form>
     
