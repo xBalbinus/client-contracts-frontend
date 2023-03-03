@@ -10,6 +10,7 @@ function Inputs() {
   const [commP, setCommP] = useState('');
   const [carLink, setCarLink] = useState('');
   const [pieceSize, setPieceSize] = useState('');
+  const [carSize, setCarSize] = useState('');
   /*
   const [startEpoch, setStartEpoch] = useState('');
   const [endEpoch, setEndEpoch] = useState('');
@@ -25,6 +26,10 @@ function Inputs() {
 
   const handleChangePieceSize = (event) => {
     setPieceSize(event.target.value);
+  }
+
+  const handleChangeCarSize = (event) => {
+    setCarSize(event.target.value);
   }
 
   /*
@@ -44,6 +49,7 @@ function Inputs() {
     console.log(commP);
     console.log(carLink);
     console.log(pieceSize);
+    console.log(carSize);
 
     const cid = new CID(commP);
 
@@ -55,7 +61,7 @@ function Inputs() {
         const dealClient = new ethers.Contract(contractAddress, contractABI, signer);
         const extraParamsV1 = [
           carLink,
-          1175,
+          carSize,
           false, // taskArgs.skipIpniAnnounce,
           false // taskArgs.removeUnsealedCopy
         ]
@@ -162,6 +168,10 @@ function Inputs() {
         <input type="text" value={endEpoch} onChange={handleChangeEndEpoch} />
       </div>
     */}
+      <div style = {{ display: 'block' , width: '50%', margin: 'auto' }}>
+        Car Size:
+        <input type="text" value={carSize} onChange={handleChangeCarSize} />
+      </div>
       <button type="submit" style={{ display: 'block' , width: '50%', margin: 'auto' }}>Submit</button>
     </form>
     
