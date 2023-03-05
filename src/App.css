@@ -24,8 +24,10 @@ button {
   transform: translate(-50%, -50%);
 }
 
-.button-disconnect {
-  background-color: #ffc9c9;
+.connect-wallet-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 button:hover {

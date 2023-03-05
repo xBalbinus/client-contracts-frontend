@@ -7,20 +7,21 @@ const contractAddress = "0xab76119E5B3863c5d297693384777d5231E0Aeb2";
 const contractABI = contract.abi;
 
 function Inputs() {
-  const [commP, setCommP] = useState('');
-  const [carLink, setCarLink] = useState('');
-  const [pieceSize, setPieceSize] = useState('');
-  const [carSize, setCarSize] = useState('');
-  /*
-  const [startEpoch, setStartEpoch] = useState('');
-  const [endEpoch, setEndEpoch] = useState('');
-  */
+  // Initialize with some dummy working default values
+  const [commP, setCommP] = useState('baga6ea4seaqlnvynus6vwba7rob4tuslkutuvl6zuon46cfla4ebkxcn3yxd2ji');
+  const [carLink, setCarLink] = useState('http://85.11.148.122:24008/screenshot.car');
+  const [errorMessageSubmit, setErrorMessageSubmit] = useState('');
+  const [pieceSize, setPieceSize] = useState('262144');
+  const [carSize, setCarSize] = useState('236445');
+  const [carLinkExplain, setCarLinkExplain] = useState(false);
+  const [commPExplain, setcommPExplain] = useState(false);
 
   const handleChangeCommP = (event) => {
     setCommP(event.target.value);
   }
 
   const handleChangeCarLink = (event) => {
+    // validate input data here
     setCarLink(event.target.value);
   }
 
@@ -51,9 +52,8 @@ function Inputs() {
     console.log(pieceSize);
     console.log(carSize);
 
-    const cid = new CID(commP);
-
     try {
+      const cid = new CID(commP);
       const { ethereum } = window;
       if (ethereum) {
         const provider = new ethers.BrowserProvider(ethereum);
@@ -92,7 +92,9 @@ function Inputs() {
       }
     }
     catch (error) {
-      console.log(error);
+      console.log(error)
+      setErrorMessageSubmit('Something went wrong. Please check that you have a valid carfile input and a valid commP.');
+      return;
     }
   }
 
@@ -141,40 +143,51 @@ function Inputs() {
   }, [])
 
   return (
-    
-    <form onSubmit={handleSubmit}>
-      <div style = {{ display: 'block' , width: '50%', margin: 'auto' }}>
-        {connectWalletButton()}
+    <div style = {{ display: 'flex', justifyContent: 'center' }}>
+       <div style = {{ position: 'absolute', top: 10, right: 50, }}>
+          {connectWalletButton()}
       </div>
-      <div style = {{ display: 'block' , width: '50%', margin: 'auto' }}>
-        Link to CAR file:
-        <input type="text" value={carLink} onChange={handleChangeCarLink} />
-      </div>
-      <div style = {{ display: 'block' , width: '50%', margin: 'auto' }}>
-        commP:
-        <input type="text" value={commP} onChange={handleChangeCommP} />
-      </div>
-      <div style = {{ display: 'block' , width: '50%', margin: 'auto' }}>
-        Piece Size:
-        <input type="text" value={pieceSize} onChange={handleChangePieceSize} />
-      </div>
-      {/*
-      <div style = {{ display: 'block' , width: '50%', margin: 'auto' }}>
-        Start Epoch:
-        <input type="text" value={startEpoch} onChange={handleChangeStartEpoch} />
-      </div>
-      <div style = {{ display: 'block' , width: '50%', margin: 'auto' }}>
-        End Epoch:
-        <input type="text" value={endEpoch} onChange={handleChangeEndEpoch} />
-      </div>
-    */}
-      <div style = {{ display: 'block' , width: '50%', margin: 'auto' }}>
-        Car Size:
-        <input type="text" value={carSize} onChange={handleChangeCarSize} />
-      </div>
-      <button type="submit" style={{ display: 'block' , width: '50%', margin: 'auto' }}>Submit</button>
-    </form>
-    
+      <form onSubmit={handleSubmit}>
+        <label>
+          Link to CAR file: 
+          <input type="text" 
+          value={carLink} 
+          onChange={handleChangeCarLink} 
+          onMouseOver={() => setCarLinkExplain(true)}
+          onMouseLeave={() => setCarLinkExplain(false)}
+          />
+          {carLinkExplain && <div style={{ color: 'gray' }} > Enter your car link </div>}
+        </label>
+        <br />
+        <br />
+        <label>
+          commP:
+          <input type="text" 
+          value={commP} 
+          onChange={handleChangeCommP} 
+          onMouseOver={() => setcommPExplain(true)}
+          onMouseLeave={() => setcommPExplain(false)}
+          />
+          {commPExplain && <div style={{ color: 'gray' }} > Enter your car link </div>}
+        </label>
+        <br />
+        <br />
+        <label>
+          Piece Size:
+          <input type="text" value={pieceSize} onChange={handleChangePieceSize} />
+        </label>
+        <br />
+        <br />
+        <label>
+          Car Size:
+          <input type="text" value={carSize} onChange={handleChangeCarSize} />
+        </label>
+        <br />
+        <br />
+        <button type="submit" style={{ display: 'block' , width: '50%', margin: 'auto' }}>Submit</button>
+        <div style={{ color: 'red' }}> {errorMessageSubmit} </div>
+      </form>
+    </div>
   );
 }
 
