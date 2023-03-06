@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import contract from '../contracts/DealClient.json';
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
 import { ethers } from 'ethers';
-const CID = require('cids')
+import { AiOutlineQuestionCircle } from 'react-icons/ai';
+const CID = require('cids');
 
 const contractAddress = "0xab76119E5B3863c5d297693384777d5231E0Aeb2";
 const contractABI = contract.abi;
@@ -144,8 +147,33 @@ function Inputs() {
 
   return (
     <div style = {{ display: 'flex', justifyContent: 'center' }}>
-       <div style = {{ position: 'absolute', top: 10, right: 50, }}>
+       <div style = {{ position: 'absolute', top: 10, right: 50 }}>
           {connectWalletButton()}
+          {window && <div style={{ color: 'green' }} > Wallet connected </div>}
+      </div>
+      <div>
+        <div style = {{ position: 'absolute', top: 30, right: 700 }} data-tooltip-id="carfile-tooltip" data-tooltip-content=" Find a URL to your car file by going to data.fvm.dev and uploading your file (site in development). You can also go to generate-car and upload the resulting car file to web3.storage.">
+          <AiOutlineQuestionCircle />
+        </div>
+        <Tooltip id="carfile-tooltip" />
+      </div>
+      <div>
+        <div style = {{ position: 'absolute', top: 70, right: 700 }} data-tooltip-id="commp-tooltip" data-tooltip-content="This is also known as the Piece CID. You can go to data.fvm.dev and get this by uploading your file (site in development). This also can be accessed as the output of generate-car.">
+          <AiOutlineQuestionCircle />
+        </div>
+        <Tooltip id="commp-tooltip" />
+      </div>
+      <div>
+        <div style = {{ position: 'absolute', top: 110, right: 700 }} data-tooltip-id="piecesize-tooltip" data-tooltip-content="This is the number of bytes of your Piece (you can read more about Filecoin Pieces in the spec). You can go to data.fvm.dev and get this by uploading your file (site in development). This also can be accessed as the output of generate-car.">
+          <AiOutlineQuestionCircle />
+        </div>
+        <Tooltip id="piecesize-tooltip" />
+      </div>
+      <div>
+        <div style = {{ position: 'absolute', top: 155, right: 700 }} data-tooltip-id="carsize-tooltip" data-tooltip-content="This is the size of the CAR file in bytes. You can go to data.fvm.dev and get this by uploading your file (site in development). This also can be accessed by running curl -I <URL to CAR file> on your command line.">
+          <AiOutlineQuestionCircle />
+        </div>
+        <Tooltip id="carsize-tooltip" />
       </div>
       <form onSubmit={handleSubmit}>
         <label>
