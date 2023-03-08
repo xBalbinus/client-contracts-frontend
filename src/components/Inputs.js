@@ -158,86 +158,118 @@ function Inputs() {
   }, []);
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <div style={{ position: "absolute", top: 10, right: 50 }}>
+    <div id="container"> 
+      <div style={{ display: "flex" }}> <div class="child-1-cw"> 
         {connectWalletButton()}
         {window && <div style={{ color: "green" }}> Wallet connected </div>}
-      </div>
-      <div>
-        <div
-          style={{ position: "absolute", top: 30, right: 700 }}
-          data-tooltip-id="carfile-tooltip"
-          data-tooltip-content=" Find a URL to your car file by going to data.fvm.dev and uploading your file (site in development). You can also go to generate-car and upload the resulting car file to web3.storage."
-        >
-          <AiOutlineQuestionCircle />
-        </div>
-        <Tooltip id="carfile-tooltip" />
-      </div>
-      <div>
-        <div
-          style={{ position: "absolute", top: 70, right: 700 }}
-          data-tooltip-id="commp-tooltip"
-          data-tooltip-content="This is also known as the Piece CID. You can go to data.fvm.dev and get this by uploading your file (site in development). This also can be accessed as the output of generate-car."
-        >
-          <AiOutlineQuestionCircle />
-        </div>
-        <Tooltip id="commp-tooltip" />
-      </div>
-      <div>
-        <div
-          style={{ position: "absolute", top: 110, right: 700 }}
-          data-tooltip-id="piecesize-tooltip"
-          data-tooltip-content="This is the number of bytes of your Piece (you can read more about Filecoin Pieces in the spec). You can go to data.fvm.dev and get this by uploading your file (site in development). This also can be accessed as the output of generate-car."
-        >
-          <AiOutlineQuestionCircle />
-        </div>
-        <Tooltip id="piecesize-tooltip" />
-      </div>
-      <div>
-        <div
-          style={{ position: "absolute", top: 155, right: 700 }}
-          data-tooltip-id="carsize-tooltip"
-          data-tooltip-content="This is the size of the CAR file in bytes. You can go to data.fvm.dev and get this by uploading your file (site in development). This also can be accessed by running curl -I <URL to CAR file> on your command line."
-        >
-          <AiOutlineQuestionCircle />
-        </div>
-        <Tooltip id="carsize-tooltip" />
-      </div>
-      <form onSubmit={handleSubmit}>
+      </div></div>
+
+      <form class="child-1"  onSubmit={handleSubmit}>
+
+        <div class='child-1-hg'>
+
         <label>
-          Link to CAR file:
-          <input
+          Link to CAR file
+        </label>
+
+
+        <div>
+          <div class="tooltip"
+            data-tooltip-id="carfile-tooltip"
+            data-tooltip-delay-hide={50}
+            data-tooltip-html=" Find a URL to your car file by going to data.fvm.dev and uploading your file (site in development). <br /> You can also go to tech-greedy/generate-car and upload the resulting car file to web3.storage."
+          >
+            <AiOutlineQuestionCircle />
+          </div>
+          <Tooltip id="carfile-tooltip" />
+        </div>
+
+
+        </div>
+
+
+          <input class="input-elem"
             type="text"
             value={carLink}
             onChange={handleChangeCarLink}
           />
-        </label>
+        
         <br />
         <br />
-        <label>
-          commP:
-          <input
+
+        <div class='child-1-hg'>
+
+        <label> commP </label>
+
+            <div
+              class="tooltip"
+              data-tooltip-id="commp-tooltip"
+              data-tooltip-delay-hide={50}
+              data-tooltip-html="This is also known as the Piece CID. <br /> You can go to data.fvm.dev and get this by uploading your file (site in development). <br />This also can be accessed as the output of tech-greedy/generate-car."
+            >
+              <AiOutlineQuestionCircle />
+            </div>
+            <Tooltip id="commp-tooltip" />
+
+        </div>
+
+          <input class="input-elem"
             type="text"
             value={commP}
             onChange={handleChangeCommP}
           />
-        </label>
+
+
         <br />
         <br />
+
+        <div class='child-1-hg'>
+
         <label>
           Piece Size:
-          <input
+        </label>
+
+        <div
+          class="tooltip"
+          data-tooltip-id="piecesize-tooltip"
+          data-tooltip-delay-hide={50}
+          data-tooltip-html="This is the number of bytes of your Piece (you can read more about Filecoin Pieces in the spec). <br /> You can go to data.fvm.dev and get this by uploading your file (site in development).<br /> This also can be accessed as the output of tech-greedy/generate-car."
+        >
+          <AiOutlineQuestionCircle />
+        </div>
+        <Tooltip id="piecesize-tooltip" />
+
+
+        </div>
+
+          <input class="input-elem"
             type="text"
             value={pieceSize}
             onChange={handleChangePieceSize}
           />
-        </label>
         <br />
         <br />
+
+        <div class='child-1-hg'>
+
         <label>
           Car Size:
-          <input type="text" value={carSize} onChange={handleChangeCarSize} />
         </label>
+
+        <div
+          class="tooltip"
+          data-tooltip-id="carsize-tooltip"
+          data-tooltip-delay-hide={50}
+          data-tooltip-html="This is the size of the CAR file in bytes. <br /> You can go to data.fvm.dev and get this by uploading your file (site in development). <br /> This also can be accessed by running curl -I <URL to CAR file> on your command line."
+        >
+          <AiOutlineQuestionCircle />
+        </div>
+        <Tooltip id="carsize-tooltip" />
+
+
+        </div>
+
+          <input class="input-elem" type="text" value={carSize} onChange={handleChangeCarSize} />
         <br />
         <br />
         <button
