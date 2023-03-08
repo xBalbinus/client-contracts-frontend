@@ -8,6 +8,8 @@ const CID = require("cids");
 
 const contractAddress = "0xab76119E5B3863c5d297693384777d5231E0Aeb2";
 const contractABI = contract.abi;
+let dealClient;
+let cid;
 
 function Inputs() {
   // Initialize with some dummy working default values
@@ -20,6 +22,8 @@ function Inputs() {
   const [errorMessageSubmit, setErrorMessageSubmit] = useState("");
   const [pieceSize, setPieceSize] = useState("262144");
   const [carSize, setCarSize] = useState("236445");
+  const [txSubmitted, setTxSubmitted] = useState("");
+  const [dealID, setDealID] = useState("");
 
   const handleChangeCommP = (event) => {
     setCommP(event.target.value);
@@ -58,12 +62,12 @@ function Inputs() {
     console.log(carSize);
 
     try {
-      const cid = new CID(commP);
+      cid = new CID(commP);
       const { ethereum } = window;
       if (ethereum) {
         const provider = new ethers.BrowserProvider(ethereum);
         const signer = await provider.getSigner();
-        const dealClient = new ethers.Contract(
+        dealClient = new ethers.Contract(
           contractAddress,
           contractABI,
           signer
@@ -78,7 +82,7 @@ function Inputs() {
           cid.bytes, //cidHex
           pieceSize, //taskArgs.pieceSize,
           false, //taskArgs.verifiedDeal,
-          "bafk2bzacec3jst4tkh424chatp273o6rxvipfg54kphd56gaxobpcdtr2sgco", //taskArgs.label,
+          "", //taskArgs.label,
           520000, // startEpoch
           1555200, // endEpoch
           0, // taskArgs.storagePricePerEpoch,
@@ -95,8 +99,9 @@ function Inputs() {
         console.log("Proposing deal...");
         const receipt = await transaction.wait();
         console.log(receipt);
+        setTxSubmitted("Transaction submitted! " + receipt.hash);
 
-        console.log("Deal proposed!");
+        console.log("Deal proposed! CID: " + cid);
       } else {
         console.log("Ethereum object doesn't exist!");
       }
@@ -153,6 +158,32 @@ function Inputs() {
     );
   };
 
+  const dealIDButton = () => {
+    return (
+      <button
+        onClick={dealIDHandler}
+      >
+        Get deal ID
+      </button>
+    );
+  };
+
+  const dealIDHandler = async () => {
+    setInterval(async () => {
+        setDealID("Loading");
+        console.log(cid);
+        console.log("Checking for deal ID...");
+        const transaction = await dealClient.pieceDeals(cid.bytes);
+        console.log(transaction);
+        if (transaction !== undefined && typeof(transaction) === "number") {
+          setDealID(transaction);
+          console.log(transaction);
+          return;
+        }
+      }, 5000
+    );
+  };
+
   useEffect(() => {
     checkWalletIsConnected();
   }, []);
@@ -161,7 +192,7 @@ function Inputs() {
     <div id="container"> 
       <div style={{ display: "flex" }}> <div class="child-1-cw"> 
         {connectWalletButton()}
-        {window && <div style={{ color: "green" }}> Wallet connected </div>}
+        {window && <div style={{ color: "green" }}> Connected: Hyperspace </div>}
       </div></div>
 
       <form class="child-1"  onSubmit={handleSubmit}>
@@ -279,7 +310,18 @@ function Inputs() {
           Submit
         </button>
         <div style={{ color: "red" }}> {errorMessageSubmit} </div>
+        <div style={{ color: "green" }}> {txSubmitted} </div>
       </form>
+
+      <br />
+      <br />
+      <div class="child-1-hg"> 
+        <div style={{ display: "flex", width: "50%", margin: "auto" }}> 
+          {dealIDButton()}
+        </div>
+      </div>
+      {dealID && <div style={{ color: "green", margin:"auto" }}> Deal ID: {dealID}  </div>}
+
     </div>
   );
 }
