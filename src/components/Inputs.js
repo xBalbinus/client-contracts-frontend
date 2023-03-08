@@ -173,11 +173,11 @@ function Inputs() {
         setDealID("Loading");
         console.log(cid);
         console.log("Checking for deal ID...");
-        const transaction = await dealClient.pieceDeals(cid.bytes);
-        console.log(transaction);
-        if (transaction !== undefined && typeof(transaction) === "number") {
-          setDealID(transaction);
-          console.log(transaction);
+        const dealID = await dealClient.pieceDeals(cid.bytes);
+        console.log(dealID);
+        if (dealID !== undefined && typeof(transaction) === "number") {
+          setDealID("https://filfox.info/en/deal/" + dealID);
+          console.log(dealID);
           return;
         }
       }, 5000
@@ -320,7 +320,7 @@ function Inputs() {
           {dealIDButton()}
         </div>
       </div>
-      {dealID && <div style={{ color: "green", margin:"auto" }}> Deal ID: {dealID}  </div>}
+      {dealID && <div style={{ color: "green", margin:"auto" }}> Deal: {dealID}  </div>}
 
     </div>
   );
