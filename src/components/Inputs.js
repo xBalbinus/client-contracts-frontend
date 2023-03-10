@@ -179,8 +179,8 @@ function Inputs() {
         console.log("Checking for deal ID...");
         const dealID = await dealClient.pieceDeals(cid.bytes);
         console.log(dealID);
-        if (dealID !== undefined && typeof(transaction) === "number") {
-          setDealID("https://filfox.info/en/deal/" + dealID);
+        if (dealID !== undefined && dealID !== "0n") {
+          setDealID("https://hyperspace.filfox.info/en/deal/" + dealID);
           console.log(dealID);
           return;
         }
