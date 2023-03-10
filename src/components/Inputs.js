@@ -6,7 +6,7 @@ import { ethers } from "ethers";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 const CID = require("cids");
 
-const contractAddress = "0xab76119E5B3863c5d297693384777d5231E0Aeb2";
+const contractAddress = "0xf4E0C74D76Bf324293bB3B3DA184d164d06F7664";
 const contractABI = contract.abi;
 let dealClient;
 let cid;
@@ -82,7 +82,7 @@ function Inputs() {
           cid.bytes, //cidHex
           pieceSize, //taskArgs.pieceSize,
           false, //taskArgs.verifiedDeal,
-          "", //taskArgs.label,
+          commP, //taskArgs.label,
           520000, // startEpoch
           1555200, // endEpoch
           0, // taskArgs.storagePricePerEpoch,
@@ -100,6 +100,10 @@ function Inputs() {
         const receipt = await transaction.wait();
         console.log(receipt);
         setTxSubmitted("Transaction submitted! " + receipt.hash);
+
+        dealClient.on("DealProposalCreate", (id, size, verified, price)=>{
+          console.log(id, size, verified, price);
+        })
 
         console.log("Deal proposed! CID: " + cid);
       } else {
